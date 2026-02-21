@@ -1,0 +1,252 @@
+/* Global Styles for Microart Portfolio */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
+
+/* Tailwind base */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================
+   Design Tokens
+   ================================ */
+:root {
+  /* Typography - Elegant, restrained */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Type scale - deliberate rhythm (editorial) */
+  --text-xs: 0.75rem;
+  /* 12px - captions, labels */
+  --text-sm: 0.875rem;
+  /* 14px - small text */
+  --text-base: 1rem;
+  /* 16px - body */
+  --text-lg: 1.125rem;
+  /* 18px - lead */
+  --text-xl: 1.25rem;
+  /* 20px - subhead */
+  --text-2xl: 2rem;
+  /* 32px - section heading */
+  --text-3xl: 2.5rem;
+  /* 40px - display */
+  --text-hero: 4.5rem;
+  /* 72px - hero (restrained) */
+
+  /* Colors - warm charcoal + soft ivory */
+  --color-bg: #F4F1EC;
+  --color-bg-subtle: #EBE8E2;
+  --color-bg-alt: #EBE8E2;
+  --color-text: #1E1C1B;
+  --color-text-muted: #7A756E;
+  --color-text-subtle: #A39E96;
+  --color-accent: #3E3A36;
+  --color-border: #DDD9D1;
+  --color-border-subtle: #D0CBC2;
+
+  /* Layout - single content rail */
+  --content-width: 72rem;
+  /* 1152px - max-w-6xl equivalent */
+  --content-width-narrow: 40rem;
+  /* 672px - contact / text blocks */
+  --section-padding-x: 1.5rem;
+  /* 24px - px-6 base */
+  --section-padding-x-md: 3rem;
+  /* 48px - md */
+  --section-padding-x-lg: 5rem;
+  /* 80px - lg */
+  --section-padding-y: 6rem;
+  /* 96px - py-24 */
+  --section-padding-y-md: 8rem;
+  /* 128px - md:py-32 */
+
+  /* Spacing - 8px baseline rhythm */
+  --space-xs: 0.5rem;
+  /* 8px */
+  --space-sm: 1rem;
+  /* 16px */
+  --space-md: 1.5rem;
+  /* 24px */
+  --space-lg: 2rem;
+  /* 32px */
+  --space-xl: 3rem;
+  /* 48px */
+  --space-2xl: 4rem;
+  /* 64px */
+  --space-3xl: 5rem;
+  /* 80px */
+  --space-4xl: 6rem;
+  /* 96px */
+
+  /* Animation - calm, deliberate motion */
+  --ease-smooth: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --duration-instant: 150ms;
+  --duration-fast: 300ms;
+  --duration-medium: 500ms;
+  --duration-slow: 800ms;
+  --duration-slower: 1200ms;
+}
+
+/* ================================
+   Base Styles
+   ================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* scroll-behavior removed - GSAP ScrollTrigger handles smooth scroll */
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings use serif */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* ================================
+   Layout Utilities
+   ================================ */
+.section-padding-x {
+  padding-left: var(--section-padding-x);
+  padding-right: var(--section-padding-x);
+}
+
+@media (min-width: 768px) {
+  .section-padding-x {
+    padding-left: var(--section-padding-x-md);
+    padding-right: var(--section-padding-x-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding-x {
+    padding-left: var(--section-padding-x-lg);
+    padding-right: var(--section-padding-x-lg);
+  }
+}
+
+.section-padding {
+  padding-left: var(--section-padding-x);
+  padding-right: var(--section-padding-x);
+  padding-top: var(--section-padding-y);
+  padding-bottom: var(--section-padding-y);
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-left: var(--section-padding-x-md);
+    padding-right: var(--section-padding-x-md);
+    padding-top: var(--section-padding-y-md);
+    padding-bottom: var(--section-padding-y-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-left: var(--section-padding-x-lg);
+    padding-right: var(--section-padding-x-lg);
+  }
+}
+
+.content-width {
+  max-width: var(--content-width);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.content-width-narrow {
+  max-width: var(--content-width-narrow);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.footer-padding {
+  padding-left: var(--section-padding-x);
+  padding-right: var(--section-padding-x);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .footer-padding {
+    padding-left: var(--section-padding-x-md);
+    padding-right: var(--section-padding-x-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-padding {
+    padding-left: var(--section-padding-x-lg);
+    padding-right: var(--section-padding-x-lg);
+  }
+}
+
+/* Section scroll boundary - subtle fade-in for section presence */
+.section-boundary {
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-smooth);
+}
+
+.section-boundary.visible {
+  opacity: 1;
+}
+
+/* Parallax elements - smooth transform via requestAnimationFrame */
+[data-parallax] {
+  will-change: transform;
+}
+
+/* ================================
+   Utility Classes
+   ================================ */
+.text-balance {
+  text-wrap: balance;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}

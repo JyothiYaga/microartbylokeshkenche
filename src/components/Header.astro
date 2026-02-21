@@ -1,0 +1,207 @@
+---
+/**
+ * Header Component
+ * Always visible, sticky header with artist name and navigation.
+ * Links scroll to sections on the single-page layout.
+ */
+interface Props {
+  currentSection?: string;
+}
+
+const { currentSection } = Astro.props;
+
+const navLinks = [
+  { href: "#gallery", label: "Gallery" },
+  { href: "#about", label: "About" },
+  { href: "#words", label: "Words" },
+  { href: "#contact", label: "Contact" },
+];
+---
+
+<header
+  id="main-header"
+  class="fixed top-0 left-0 right-0 z-40 transition-all duration-500 ease-out"
+>
+  <div
+    class="content-width section-padding-x py-5 flex justify-between items-center"
+  >
+    <!-- Artist name / logo -->
+    <a
+      href="#hero"
+      class="header-link text-lg md:text-xl font-serif font-light tracking-wide transition-colors duration-500"
+    >
+      Lokesh Kenche
+    </a>
+
+    <!-- Navigation links (desktop) -->
+    <nav class="hidden md:flex items-center gap-10">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="header-nav-link text-xs uppercase tracking-widest transition-colors duration-500"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- Mobile menu button -->
+    <button
+      id="mobile-menu-btn"
+      class="md:hidden p-2 -mr-2 header-link transition-colors duration-500"
+      aria-label="Toggle menu"
+    >
+      <svg
+        class="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <nav
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-stone-700/30 bg-stone-900/95 backdrop-blur-sm mobile-menu-nav"
+  >
+    <div class="section-padding-x py-4 flex flex-col gap-4">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm uppercase tracking-widest text-stone-300 hover:text-stone-50 transition-colors"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* Default state: transparent header on dark hero */
+  #main-header {
+    background: transparent;
+  }
+
+  #main-header .header-link {
+    color: rgb(221 217 209); /* warm stone-200 */
+  }
+
+  #main-header .header-link:hover {
+    color: rgb(244 241 236); /* warm ivory */
+  }
+
+  #main-header .header-nav-link {
+    color: rgb(163 158 150); /* warm stone-400 */
+  }
+
+  #main-header .header-nav-link:hover {
+    color: rgb(244 241 236); /* warm ivory */
+  }
+
+  /* Scrolled state: light background */
+  #main-header.scrolled {
+    background: rgba(244, 241, 236, 0.95); /* warm ivory with opacity */
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgb(235 232 226); /* warm stone-100 */
+  }
+
+  #main-header.scrolled .header-link {
+    color: rgb(42 39 37); /* warm stone-800 */
+  }
+
+  #main-header.scrolled .header-link:hover {
+    color: rgb(90 85 80); /* warm stone-600 */
+  }
+
+  #main-header.scrolled .header-nav-link {
+    color: rgb(122 117 110); /* warm stone-500 */
+  }
+
+  #main-header.scrolled .header-nav-link:hover {
+    color: rgb(30 28 27); /* warm stone-900 */
+  }
+
+  /* Mobile menu adapts when scrolled */
+  #main-header.scrolled .mobile-menu-nav {
+    background: rgba(244, 241, 236, 0.98);
+    border-color: rgb(221 217 209);
+  }
+
+  #main-header.scrolled .mobile-menu-nav a {
+    color: rgb(90 85 80);
+  }
+
+  #main-header.scrolled .mobile-menu-nav a:hover {
+    color: rgb(30 28 27);
+  }
+</style>
+
+<script>
+  // Header scroll state detection
+  const header = document.getElementById("main-header");
+  const heroSection = document.getElementById("hero");
+
+  function updateHeaderState() {
+    if (!header || !heroSection) return;
+
+    const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+    const scrollY = window.scrollY;
+
+    // Add 'scrolled' class when past the hero section
+    if (scrollY > heroBottom - 80) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  }
+
+  window.addEventListener("scroll", updateHeaderState, { passive: true });
+  updateHeaderState(); // Initial check
+
+  // Mobile menu toggle
+  const menuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  menuBtn?.addEventListener("click", () => {
+    mobileMenu?.classList.toggle("hidden");
+  });
+
+  // Close mobile menu when clicking a link
+  mobileMenu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu?.classList.add("hidden");
+    });
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener(
+      "click",
+      function (this: HTMLAnchorElement, e: Event) {
+        e.preventDefault();
+        const href = this.getAttribute("href");
+        if (href) {
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        }
+      },
+    );
+  });
+</script>

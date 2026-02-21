@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "slug": "heart-on-a-tip",
+    "title": "Heart on a Tip",
+    "description": "A delicate heart carved into graphite, exploring the intersection of fragility and permanence. Each curve was shaped over 20 hours of patient, deliberate work.",
+    "image": "/images/artworks/artwork-01.png",
+    "year": "2024",
+    "medium": "Graphite on pencil lead"
+  },
+  {
+    "id": 2,
+    "slug": "miniature-temple",
+    "title": "Miniature Temple",
+    "description": "Precision architecture at microscopic scale. A sacred space carved with devotion, where every pillar and arch emerged from patience.",
+    "image": "/images/artworks/artwork-02.png",
+    "year": "2024",
+    "medium": "Graphite on pencil lead"
+  },
+  {
+    "id": 3,
+    "slug": "elephant-of-grace",
+    "title": "Elephant of Grace",
+    "description": "Strength made small. This elephant carries the weight of patience in its delicate form, trunk raised in silent greeting.",
+    "image": "/images/artworks/artwork-03.png",
+    "year": "2024",
+    "medium": "Graphite on pencil lead"
+  },
+  {
+    "id": 4,
+    "slug": "lotus-bloom",
+    "title": "Lotus Bloom",
+    "description": "Petals unfurling from carbon. Each layer carved to catch light differently, creating depth in a space smaller than a fingertip.",
+    "image": "/images/artworks/artwork-04.png",
+    "year": "2024",
+    "medium": "Graphite on pencil lead"
+  },
+  {
+    "id": 5,
+    "slug": "chain-of-links",
+    "title": "Chain of Links",
+    "description": "Three interconnected links carved from a single pencil tip. A meditation on connection and the impossible made possible.",
+    "image": "/images/artworks/artwork-05.png",
+    "year": "2023",
+    "medium": "Graphite on pencil lead"
+  },
+  {
+    "id": 6,
+    "slug": "hand-in-prayer",
+    "title": "Hand in Prayer",
+    "description": "Folded hands emerging from graphite, fingers interlaced in silent devotion. 35 hours of carving for a moment of stillness.",
+    "image": "/images/artworks/artwork-06.png",
+    "year": "2023",
+    "medium": "Graphite on pencil lead"
+  },
+  {
+    "id": 7,
+    "slug": "spiral-staircase",
+    "title": "Spiral Staircase",
+    "description": "An ascending spiral carved with mathematical precision. Each step leads nowhere and everywhere at once.",
+    "image": "/images/artworks/artwork-07.png",
+    "year": "2023",
+    "medium": "Graphite on pencil lead"
+  },
+  {
+    "id": 8,
+    "slug": "guitar-miniature",
+    "title": "Guitar Miniature",
+    "description": "A six-stringed instrument at impossible scale. The strings are mere suggestions, yet the music feels real.",
+    "image": "/images/artworks/artwork-08.png",
+    "year": "2023",
+    "medium": "Graphite on pencil lead"
+  },
+  {
+    "id": 9,
+    "slug": "rose-in-bloom",
+    "title": "Rose in Bloom",
+    "description": "Layered petals carved from darkness into form. Fragility preserved in the hardest softness.",
+    "image": "/images/artworks/artwork-09.png",
+    "year": "2022",
+    "medium": "Graphite on pencil lead"
+  },
+  {
+    "id": 10,
+    "slug": "standing-buddha",
+    "title": "Standing Buddha",
+    "description": "Serenity at microscopic scale. The figure stands in eternal calm, carved over 40 hours of meditative focus.",
+    "image": "/images/artworks/artwork-10.png",
+    "year": "2022",
+    "medium": "Graphite on pencil lead"
+  },
+  {
+    "id": 11,
+    "slug": "taj-mahal",
+    "title": "Taj Mahal",
+    "description": "A monument to love, recreated on a pencil tip. Domes and minarets rise from graphite, impossibly precise.",
+    "image": "/images/artworks/artwork-11.png",
+    "year": "2022",
+    "medium": "Graphite on pencil lead"
+  },
+  {
+    "id": 12,
+    "slug": "interlocked-hearts",
+    "title": "Interlocked Hearts",
+    "description": "Two hearts carved as one, inseparable. A testament to connection and the patience love requires.",
+    "image": "/images/artworks/artwork-12.png",
+    "year": "2021",
+    "medium": "Graphite on pencil lead"
+  }
+]

@@ -1,0 +1,92 @@
+---
+/**
+ * Loading Animation Component
+ *
+ * Minimal typewriter effect that reveals "Microart" letter-by-letter
+ * using GSAP staggered animation, then fades out to the hero section.
+ */
+---
+
+<div id="loading-screen" class="loading-overlay" aria-hidden="true">
+  <span id="typewriter-text" class="typewriter-word" aria-label="Microart"
+    ><span class="typewriter-letter">M</span><span class="typewriter-letter"
+      >i</span
+    ><span class="typewriter-letter">c</span><span class="typewriter-letter"
+      >r</span
+    ><span class="typewriter-letter">o</span><span class="typewriter-letter"
+      >a</span
+    ><span class="typewriter-letter">r</span><span class="typewriter-letter"
+      >t</span
+    ></span
+  >
+</div>
+
+<style>
+  .loading-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background-color: #1e1c1b; /* warm charcoal */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .typewriter-word {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 8vw, 7rem);
+    letter-spacing: 0.05em;
+    color: #d0cbc2; /* warm stone-300 */
+    line-height: 1;
+    display: inline-flex;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .typewriter-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(6px);
+    will-change: opacity, transform;
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+
+  const loadingScreen = document.getElementById("loading-screen");
+  const letters = document.querySelectorAll(".typewriter-letter");
+
+  if (loadingScreen && letters.length > 0) {
+    const tl = gsap.timeline();
+
+    // Initial pause — let the screen breathe
+    tl.to({}, { duration: 0.5 });
+
+    // Reveal letters one by one — slow, deliberate cadence
+    tl.to(letters, {
+      opacity: 1,
+      y: 0,
+      duration: 0.3,
+      stagger: 0.22,
+      ease: "power2.out",
+    });
+
+    // Hold the completed word — let it settle
+    tl.to({}, { duration: 1.1 });
+
+    // Fade out the entire loading overlay
+    tl.to(loadingScreen, {
+      opacity: 0,
+      duration: 0.7,
+      ease: "power2.inOut",
+      onComplete: () => {
+        loadingScreen.style.visibility = "hidden";
+        loadingScreen.style.pointerEvents = "none";
+        loadingScreen.remove();
+      },
+    });
+  }
+</script>

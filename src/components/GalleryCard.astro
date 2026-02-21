@@ -1,0 +1,71 @@
+---
+/**
+ * Gallery Card Component
+ * 
+ * Displays artwork in the gallery grid.
+ * On hover:
+ * - Other artworks subtly blur and dim (handled by CSS :has())
+ * - This artwork shows title and info icon
+ * - Subtle scale effect for depth
+ */
+interface Props {
+  artwork: {
+    slug: string;
+    title: string;
+    image: string;
+    year: string;
+  };
+}
+
+const { artwork } = Astro.props;
+---
+
+<a 
+  href={`/gallery/${artwork.slug}`}
+  class="gallery-card group relative block aspect-square overflow-hidden bg-stone-100"
+>
+  <!-- Artwork image -->
+  <img 
+    src={artwork.image}
+    alt={artwork.title}
+    class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+    loading="lazy"
+    decoding="async"
+  />
+  
+  <!-- Hover overlay - subtle darkening -->
+  <div class="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/20 transition-colors duration-500" />
+  
+  <!-- Info icon - appears on hover -->
+  <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+    <div class="w-7 h-7 rounded-full border border-white/60 flex items-center justify-center backdrop-blur-sm bg-white/10">
+      <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4m0-4h.01"/>
+        <circle cx="12" cy="12" r="10" stroke-width="1.5"/>
+      </svg>
+    </div>
+  </div>
+  
+  <!-- Title reveal on hover -->
+  <div class="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+    <h3 class="text-white text-base font-light tracking-wide drop-shadow-lg">
+      {artwork.title}
+    </h3>
+    <p class="text-white/70 text-xs mt-1 tracking-wider">{artwork.year}</p>
+  </div>
+</a>
+
+<style>
+  .gallery-card {
+    transition: filter 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+  
+  /* 
+   * When ANY card in the grid is hovered, blur all OTHER cards.
+   * This uses the CSS :has() selector for pure-CSS hover effect.
+   * No JavaScript needed!
+   */
+  .gallery-grid:has(.gallery-card:hover) .gallery-card:not(:hover) {
+    filter: blur(2px) brightness(0.75);
+  }
+</style>

@@ -1,0 +1,77 @@
+---
+/**
+ * Scroll Reveal Text Component
+ * 
+ * Text fades in gradually as the user scrolls.
+ * Starts with low opacity and slight blur, becomes brighter and sharper.
+ * 
+ * Motion should feel like "revealing" not "animating" - 
+ * as if the content was always there, just waiting to be seen.
+ * 
+ * Props:
+ * - delay: stagger delay in seconds (default: 0)
+ */
+interface Props {
+  delay?: number;
+}
+
+const { delay = 0 } = Astro.props;
+---
+
+<div 
+  class="scroll-reveal" 
+  data-delay={delay}
+  style={`--reveal-delay: ${delay}s`}
+>
+  <slot />
+</div>
+
+<style>
+  .scroll-reveal {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(10px);
+    transition: 
+      opacity 0.9s var(--reveal-delay, 0s) cubic-bezier(0.4, 0.0, 0.2, 1),
+      filter 0.9s var(--reveal-delay, 0s) cubic-bezier(0.4, 0.0, 0.2, 1),
+      transform 0.9s var(--reveal-delay, 0s) cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+  
+  .scroll-reveal.visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  /**
+   * Intersection Observer for scroll reveal
+   * 
+   * Why Intersection Observer instead of GSAP?
+   * - Native browser API = no library overhead
+   * - Perfect for "reveal once" animations
+   * - Great performance with many elements
+   * - Simpler to understand and maintain
+   */
+  const observerOptions: IntersectionObserverInit = {
+    threshold: 0.12,
+    rootMargin: '0px 0px -60px 0px' // Trigger slightly before fully in view
+  };
+  
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Add visible class to trigger CSS transition
+        entry.target.classList.add('visible');
+        // Stop observing - animation only happens once
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  
+  // Observe all scroll-reveal elements
+  document.querySelectorAll('.scroll-reveal').forEach(el => {
+    revealObserver.observe(el);
+  });
+</script>

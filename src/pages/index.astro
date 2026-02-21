@@ -1,0 +1,522 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import LoadingAnimation from "../components/LoadingAnimation.astro";
+import ScrollRevealText from "../components/ScrollRevealText.astro";
+import GalleryCard from "../components/GalleryCard.astro";
+import artworks from "../data/artworks.json";
+---
+
+<BaseLayout title="Lokesh Kenche – Micro Artist">
+  <!-- Loading animation - writes "Micro Art" -->
+  <LoadingAnimation />
+
+  <!-- Fixed header with navigation -->
+  <Header />
+
+  <!-- ========================================
+       SECTION 1: HERO (Two-column layout)
+       ======================================== -->
+  <section
+    id="hero"
+    class="section-boundary visible min-h-screen flex items-center section-padding-x py-24 md:py-32 bg-stone-900"
+  >
+    <div class="content-width">
+      <div class="grid md:grid-cols-2 gap-16 md:gap-20 lg:gap-28 items-center">
+        <!-- LEFT: Text content -->
+        <div class="space-y-8 md:space-y-10">
+          <ScrollRevealText>
+            <h1
+              class="hero-title text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] font-extralight tracking-tight font-serif text-stone-100 leading-[0.9]"
+            >
+              <span class="hero-letter">M</span><span class="hero-letter"
+                >I</span
+              ><span class="hero-letter">C</span><span class="hero-letter"
+                >R</span
+              ><span class="hero-letter">O</span><br />
+              <span class="hero-letter">A</span><span class="hero-letter"
+                >R</span
+              ><span class="hero-letter">T</span>
+            </h1>
+          </ScrollRevealText>
+          <ScrollRevealText delay={0.2}>
+            <p
+              class="text-lg md:text-xl text-stone-400 font-light leading-relaxed font-serif italic max-w-md tracking-wide"
+            >
+              On the fragile tip of a pencil,<br />
+              patience becomes art.
+            </p>
+          </ScrollRevealText>
+          <ScrollRevealText delay={0.35}>
+            <p
+              class="text-base md:text-lg text-stone-500 leading-relaxed max-w-sm tracking-wide"
+            >
+              What the eye almost misses,<br />
+              the soul remembers.
+            </p>
+          </ScrollRevealText>
+        </div>
+        <!-- RIGHT: Pencil image -->
+        <div class="order-first md:order-last">
+          <ScrollRevealText delay={0.15}>
+            <div
+              class="hero-image-container aspect-[4/5] bg-stone-800/40 overflow-hidden border border-stone-700/20"
+              data-parallax="0.1"
+            >
+              <img
+                src="/images/pencilMA.png"
+                alt="Micro art carved on pencil tip"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out hover:scale-[1.02]"
+              />
+            </div>
+          </ScrollRevealText>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* Subtle letter hover effect */
+    .hero-letter {
+      display: inline-block;
+      transition:
+        transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+        opacity 0.4s ease;
+    }
+
+    .hero-title:hover .hero-letter {
+      animation: subtle-float 2s ease-in-out infinite;
+    }
+
+    .hero-letter:nth-child(1) {
+      animation-delay: 0s;
+    }
+    .hero-letter:nth-child(2) {
+      animation-delay: 0.05s;
+    }
+    .hero-letter:nth-child(3) {
+      animation-delay: 0.1s;
+    }
+    .hero-letter:nth-child(4) {
+      animation-delay: 0.15s;
+    }
+    .hero-letter:nth-child(5) {
+      animation-delay: 0.2s;
+    }
+    .hero-letter:nth-child(6) {
+      animation-delay: 0s;
+    }
+    .hero-letter:nth-child(7) {
+      animation-delay: 0.05s;
+    }
+    .hero-letter:nth-child(8) {
+      animation-delay: 0.1s;
+    }
+
+    @keyframes subtle-float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-2px);
+      }
+    }
+
+    /* Refined image container */
+    .hero-image-container {
+      position: relative;
+    }
+
+    .hero-image-container::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 60%,
+        rgba(28, 25, 23, 0.1) 100%
+      );
+      pointer-events: none;
+    }
+  </style>
+
+  <!-- ========================================
+       TRANSITION TEXT (Hero → Gallery)
+       GSAP ScrollTrigger pinned sequence
+       ======================================== -->
+  <section
+    id="transition-trigger"
+    class="section-boundary visible"
+    style="min-height: 100vh; background-color: #252220;"
+  >
+    <div
+      class="content-width"
+      style="height: 100vh; display: flex; align-items: center; justify-content: center;"
+    >
+      <div style="position: relative; width: 100%; text-align: center;">
+        <p
+          id="transition-line-1"
+          class="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-light font-serif text-stone-300"
+          style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transform: translateY(20px); letter-spacing: 0.06em;"
+        >
+          Enter
+        </p>
+        <p
+          id="transition-line-2"
+          class="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-light font-serif text-stone-400 italic"
+          style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transform: translateY(20px); letter-spacing: 0.05em;"
+        >
+          my virtual
+        </p>
+        <p
+          id="transition-line-3"
+          class="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-light font-serif text-stone-200"
+          style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transform: translateY(20px); letter-spacing: 0.06em;"
+        >
+          Micro Art Gallery
+        </p>
+        <!-- Invisible spacer to maintain layout height -->
+        <p
+          class="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-light font-serif invisible"
+          aria-hidden="true"
+          style="letter-spacing: 0.06em;"
+        >
+          Micro Art Gallery
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const line1 = document.getElementById("transition-line-1");
+    const line2 = document.getElementById("transition-line-2");
+    const line3 = document.getElementById("transition-line-3");
+
+    if (line1 && line2 && line3) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#transition-trigger",
+          start: "top top",
+          end: "+=200%",
+          scrub: 1,
+          pin: true,
+        },
+      });
+
+      // Line 1: fade in then fade out (0-2 seconds)
+      tl.to(line1, { opacity: 1, y: 0, duration: 1, ease: "power2.inOut" }, 0)
+        .to(line1, { opacity: 0, y: -10, duration: 1, ease: "power2.inOut" }, 1)
+
+        // Line 2: fade in then fade out (2-4 seconds)
+        .to(line2, { opacity: 1, y: 0, duration: 1, ease: "power2.inOut" }, 2)
+        .to(line2, { opacity: 0, y: -10, duration: 1, ease: "power2.inOut" }, 3)
+
+        // Line 3: fade in and stay (4-5 seconds)
+        .to(line3, { opacity: 1, y: 0, duration: 1, ease: "power2.inOut" }, 4);
+    }
+  </script>
+
+  <!-- ========================================
+       SECTION 2: GALLERY
+       ======================================== -->
+  <section id="gallery" class="section-boundary section-padding bg-stone-800">
+    <div class="content-width">
+      <header class="text-center mb-12 md:mb-16">
+        <ScrollRevealText>
+          <h2
+            class="text-3xl md:text-4xl font-light font-serif text-stone-100 mb-3"
+          >
+            Gallery
+          </h2>
+        </ScrollRevealText>
+        <ScrollRevealText delay={0.1}>
+          <p class="text-stone-300 max-w-xl mx-auto text-base leading-relaxed">
+            Each piece carved from a single pencil tip.<br />
+            Hover to explore. Click to discover.
+          </p>
+        </ScrollRevealText>
+      </header>
+      <div
+        class="gallery-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5"
+      >
+        {
+          artworks.map((artwork, index) => (
+            <ScrollRevealText delay={0.05 + index * 0.03}>
+              <GalleryCard artwork={artwork} />
+            </ScrollRevealText>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION 3: ABOUT
+       ======================================== -->
+  <section id="about" class="section-boundary section-padding bg-stone-600">
+    <div class="content-width">
+      <div class="grid md:grid-cols-5 gap-12 md:gap-16 items-start">
+        <!-- Artist portrait -->
+        <div class="md:col-span-2">
+          <ScrollRevealText>
+            <div
+              class="aspect-[3/4] bg-stone-400 overflow-hidden"
+              data-parallax="0.05"
+            >
+              <img
+                src="/images/artist.jpg"
+                alt="Lokesh Kenche - Micro Artist"
+                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                loading="lazy"
+              />
+            </div>
+          </ScrollRevealText>
+        </div>
+        <!-- Biography content -->
+        <div class="md:col-span-3 space-y-6">
+          <ScrollRevealText>
+            <h2
+              class="text-3xl md:text-4xl font-light font-serif text-stone-100 mb-2"
+            >
+              About Me
+            </h2>
+            <div class="h-px bg-stone-400 w-12 mt-4" aria-hidden="true"></div>
+          </ScrollRevealText>
+          <ScrollRevealText delay={0.1}>
+            <p class="text-base leading-relaxed text-stone-200">
+              Lokesh Kenche is a micro artist who transforms graphite into
+              extraordinary miniature sculptures. Working on the fragile tip of
+              a pencil, he blends patience, precision, and imagination to carve
+              intricate forms that challenge scale and perception.
+            </p>
+          </ScrollRevealText>
+          <ScrollRevealText delay={0.2}>
+            <p class="text-base leading-relaxed text-stone-200">
+              His work turns the overlooked into the unforgettable, inviting
+              viewers to slow down and discover art in its most delicate
+              details. His work balances creativity with discipline, where
+              precision meets imagination at a microscopic scale.
+            </p>
+          </ScrollRevealText>
+          <ScrollRevealText delay={0.3}>
+            <p class="text-base leading-relaxed text-stone-200">
+              Deeply patient and detail-driven, Lokesh approaches each piece as
+              a quiet dialogue between material and time, believing that even
+              the smallest forms can create a powerful emotional connection.
+            </p>
+          </ScrollRevealText>
+          <ScrollRevealText delay={0.4}>
+            <p
+              class="text-base leading-relaxed text-stone-300 italic font-serif"
+            >
+              Every creation is an invitation to pause, observe, and reconnect
+              with the beauty of focused craftsmanship.
+            </p>
+          </ScrollRevealText>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION 4: ARTIST'S WORDS
+       ======================================== -->
+  <section id="words" class="section-boundary section-padding bg-stone-400">
+    <div class="content-width">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <!-- Quotes -->
+        <div class="space-y-8 md:space-y-10">
+          <ScrollRevealText>
+            <blockquote class="space-y-4">
+              <p
+                class="text-2xl md:text-3xl font-light font-serif leading-tight text-stone-800 italic"
+              >
+                "Art speaks where words are unable to explain."
+              </p>
+              <footer class="text-stone-600 text-sm tracking-wider">
+                — Lokesh Kenche
+              </footer>
+            </blockquote>
+          </ScrollRevealText>
+          <ScrollRevealText delay={0.15}>
+            <div class="h-px bg-stone-500 w-12" aria-hidden="true"></div>
+          </ScrollRevealText>
+          <ScrollRevealText delay={0.25}>
+            <p
+              class="text-base md:text-lg text-stone-700 leading-relaxed max-w-lg"
+            >
+              In the silence of precision, in the patience of each stroke, micro
+              art becomes a meditation on what remains when everything else
+              falls away.
+            </p>
+          </ScrollRevealText>
+          <ScrollRevealText delay={0.35}>
+            <blockquote class="border-l-2 border-stone-500 pl-5">
+              <p
+                class="text-lg font-serif text-stone-800 leading-relaxed italic"
+              >
+                "The smallest forms hold the greatest truths."
+              </p>
+            </blockquote>
+          </ScrollRevealText>
+        </div>
+        <!-- Supporting image -->
+        <ScrollRevealText delay={0.15}>
+          <div
+            class="aspect-[4/5] bg-stone-400 overflow-hidden"
+            data-parallax="0.08"
+          >
+            <img
+              src="/images/quote-bg.jpg"
+              alt="Detail of micro art process"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        </ScrollRevealText>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       SECTION 5: CONTACT
+       ======================================== -->
+  <section id="contact" class="section-boundary section-padding bg-stone-200">
+    <div class="content-width-narrow text-center">
+      <ScrollRevealText>
+        <h2
+          class="text-3xl md:text-4xl font-light font-serif text-stone-800 mb-3"
+        >
+          Reach Out
+        </h2>
+        <p class="text-base text-stone-600 italic font-serif">
+          Let's create something beautiful together
+        </p>
+      </ScrollRevealText>
+      <ScrollRevealText delay={0.1}>
+        <div
+          class="h-px bg-stone-400 w-12 mx-auto my-10 md:my-12"
+          aria-hidden="true"
+        >
+        </div>
+      </ScrollRevealText>
+      <div class="space-y-8 text-left max-w-sm mx-auto">
+        <ScrollRevealText delay={0.15}>
+          <div>
+            <p class="text-xs uppercase tracking-widest text-stone-400 mb-1">
+              Location
+            </p>
+            <p class="text-base text-stone-800">Shamshabad, Hyderabad</p>
+            <p class="text-sm text-stone-600">India</p>
+          </div>
+        </ScrollRevealText>
+        <ScrollRevealText delay={0.2}>
+          <div>
+            <p class="text-xs uppercase tracking-widest text-stone-400 mb-1">
+              Email
+            </p>
+            <a
+              href="mailto:LokeshKenche@gmail.com"
+              class="text-base text-stone-800 hover:text-stone-500 transition-colors duration-300"
+            >
+              LokeshKenche@gmail.com
+            </a>
+          </div>
+        </ScrollRevealText>
+        <ScrollRevealText delay={0.25}>
+          <div>
+            <p class="text-xs uppercase tracking-widest text-stone-400 mb-1">
+              Phone
+            </p>
+            <a
+              href="tel:+918008991451"
+              class="text-base text-stone-800 hover:text-stone-500 transition-colors duration-300"
+            >
+              (+91) 8008991451
+            </a>
+          </div>
+        </ScrollRevealText>
+      </div>
+      <ScrollRevealText delay={0.3}>
+        <p
+          class="mt-12 md:mt-16 text-sm text-stone-500 max-w-md mx-auto leading-relaxed"
+        >
+          For commissions, collaborations, or inquiries about available works,
+          please reach out via email.
+        </p>
+      </ScrollRevealText>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer
+    class="footer-padding border-t border-stone-300 text-center bg-stone-100"
+  >
+    <p class="text-sm text-stone-500">
+      © 2024 Lokesh Kenche. All rights reserved.
+    </p>
+  </footer>
+
+  <script>
+    // Subtle section-boundary reveal: sections fade in as they enter view
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            sectionObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" },
+    );
+    document
+      .querySelectorAll(".section-boundary:not(.visible)")
+      .forEach((el) => sectionObserver.observe(el));
+
+    // Parallax scroll effect
+    const parallaxElements = document.querySelectorAll("[data-parallax]");
+    let ticking = false;
+
+    function updateParallax() {
+      const scrollY = window.scrollY;
+
+      parallaxElements.forEach((el) => {
+        const speed = parseFloat((el as HTMLElement).dataset.parallax ?? "0.1");
+        const rect = el.getBoundingClientRect();
+        const elementTop = rect.top + scrollY;
+        const viewportCenter = scrollY + window.innerHeight / 2;
+        const distanceFromCenter =
+          viewportCenter - elementTop - rect.height / 2;
+        const offset = distanceFromCenter * speed;
+
+        // Clamp offset to max 40px to keep movement subtle
+        const clampedOffset = Math.max(-40, Math.min(40, offset));
+
+        (el as HTMLElement).style.transform = `translateY(${clampedOffset}px)`;
+      });
+
+      ticking = false;
+    }
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(updateParallax);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+
+    // Initial parallax calculation
+    updateParallax();
+  </script>
+</BaseLayout>
