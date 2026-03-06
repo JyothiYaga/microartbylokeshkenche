@@ -35,26 +35,21 @@ const exhibitionNumber = String(index + 1).padStart(2, '0');
     decoding="async"
   />
   
-  <!-- Hover overlay - subtle darkening -->
-  <div class="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/20 transition-colors duration-500" />
-  
-  <!-- Info icon - appears on hover -->
-  <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-    <div class="w-7 h-7 rounded-full border border-white/60 flex items-center justify-center backdrop-blur-sm bg-white/10">
-      <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4m0-4h.01"/>
-        <circle cx="12" cy="12" r="10" stroke-width="1.5"/>
-      </svg>
-    </div>
+  <!-- Gradient overlay — rich bottom fade -->
+  <div class="card-overlay absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
+
+  <!-- Centered "View" text on hover -->
+  <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-400 card-view-text">
+    <span class="text-sm font-serif italic text-stone-100 tracking-[0.3em] uppercase">View</span>
   </div>
-  
+
   <!-- Title reveal on hover -->
-  <div class="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
-    <p class="text-white/50 text-[10px] uppercase tracking-widest font-sans mb-1">No. {exhibitionNumber}</p>
+  <div class="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out border-l-2 border-[#C4A882]/0 group-hover:border-[#C4A882]/70">
+    <p class="text-[10px] uppercase tracking-widest font-sans mb-1" style="color: rgba(196,168,130,0.85);">No. {exhibitionNumber}</p>
     <h3 class="text-white text-base font-light font-serif tracking-wide drop-shadow-lg">
       {artwork.title}
     </h3>
-    <p class="text-white/60 text-xs mt-1 tracking-widest">{artwork.year}</p>
+    <p class="text-white/50 text-xs mt-1 tracking-widest">{artwork.year}</p>
   </div>
 </a>
 
@@ -62,13 +57,30 @@ const exhibitionNumber = String(index + 1).padStart(2, '0');
   .gallery-card {
     transition: filter 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
   }
-  
-  /* 
+
+  .card-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(10, 9, 8, 0.88) 0%,
+      rgba(10, 9, 8, 0.4) 40%,
+      transparent 70%
+    );
+  }
+
+  .card-view-text {
+    transform: translateY(4px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .group:hover .card-view-text {
+    transform: translateY(0);
+  }
+
+  /*
    * When ANY card in the grid is hovered, blur all OTHER cards.
-   * This uses the CSS :has() selector for pure-CSS hover effect.
-   * No JavaScript needed!
+   * Pure-CSS hover effect using :has() selector.
    */
   .gallery-grid:has(.gallery-card:hover) .gallery-card:not(:hover) {
-    filter: blur(3px) brightness(0.65);
+    filter: blur(3px) brightness(0.55);
   }
 </style>

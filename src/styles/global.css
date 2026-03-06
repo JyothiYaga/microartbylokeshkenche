@@ -1,5 +1,6 @@
 /* Global Styles for Microart Portfolio */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap');
 
 /* Tailwind base */
 @tailwind base;
@@ -32,16 +33,24 @@
   --text-hero: 4.5rem;
   /* 72px - hero (restrained) */
 
-  /* Colors - warm charcoal + soft ivory */
-  --color-bg: #F0EBE2;
+  /* Colors - graphite studio palette */
+  --color-bg: #F2EDE6;
   --color-bg-subtle: #EBE8E2;
   --color-bg-alt: #EBE8E2;
   --color-text: #1E1C1B;
   --color-text-muted: #7A756E;
   --color-text-subtle: #A39E96;
-  --color-accent: #3E3A36;
+  --color-accent: #C4A882;
   --color-border: #DDD9D1;
   --color-border-subtle: #D0CBC2;
+
+  /* Graphite studio darks */
+  --color-graphite-deep: #0C0B0A;
+  --color-graphite-warm: #1A1715;
+  --color-graphite-mid: #2A2520;
+  --color-gold: #C4A882;
+  --color-gold-muted: #9A8060;
+  --color-ivory: #F2EDE6;
 
   /* Layout - single content rail */
   --content-width: 72rem;
@@ -118,7 +127,7 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.028;
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 180px;
@@ -267,5 +276,107 @@ img {
 /* Gallery cursor — museum crosshair feel */
 .gallery-grid a {
   cursor: crosshair;
+}
+
+/* ================================
+   Custom Cursor
+   ================================ */
+@media (hover: hover) and (pointer: fine) {
+  html {
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+    will-change: transform;
+  }
+
+  .cursor-follower {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(196, 168, 130, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.35s ease, height 0.35s ease, border-color 0.35s ease, border-radius 0.35s ease;
+    will-change: transform;
+  }
+
+  .cursor.cursor-hover {
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+  }
+
+  .cursor-follower.cursor-hover {
+    width: 52px;
+    height: 52px;
+    border-color: rgba(196, 168, 130, 0.8);
+  }
+
+  .cursor.cursor-gallery {
+    width: 4px;
+    height: 4px;
+    background-color: var(--color-gold);
+  }
+
+  .cursor-follower.cursor-gallery {
+    width: 44px;
+    height: 44px;
+    border-radius: 0;
+    border-color: rgba(196, 168, 130, 0.6);
+  }
+}
+
+/* ================================
+   Gold Accent Utilities
+   ================================ */
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-gold) 0%, transparent 100%);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.gold-rule.visible {
+  transform: scaleX(1);
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.gold-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+  color: var(--color-gold);
+}
+
+/* ================================
+   Scroll Indicator
+   ================================ */
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+.scroll-indicator {
+  animation: bounce-subtle 2.5s ease-in-out infinite;
 }
 

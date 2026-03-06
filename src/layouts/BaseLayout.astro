@@ -28,6 +28,9 @@ const {
     <title>{title}</title>
   </head>
   <body class="bg-stone-50 text-stone-900 antialiased">
+    <!-- Custom cursor (hidden on touch devices via CSS) -->
+    <div id="cursor" class="cursor" aria-hidden="true"></div>
+    <div id="cursor-follower" class="cursor-follower" aria-hidden="true"></div>
     <slot />
   </body>
 </html>
@@ -55,3 +58,56 @@ const {
     outline: none;
   }
 </style>
+
+<script>
+  // Custom cursor — dot follows instantly, ring follows with lerp
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursor-follower');
+
+  // Only run on hover-capable devices
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && cursor && follower) {
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+    let rafId: number;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+    });
+
+    function animateFollower() {
+      followerX += (mouseX - followerX) * 0.15;
+      followerY += (mouseY - followerY) * 0.15;
+      follower.style.transform = `translate(calc(${followerX}px - 50%), calc(${followerY}px - 50%))`;
+      rafId = requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+
+    // Hover state on interactive elements
+    document.querySelectorAll('a, button').forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('cursor-hover');
+        follower.classList.add('cursor-hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('cursor-hover');
+        follower.classList.remove('cursor-hover');
+      });
+    });
+
+    // Gallery crosshair state
+    document.querySelectorAll('.gallery-card').forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.remove('cursor-hover');
+        follower.classList.remove('cursor-hover');
+        cursor.classList.add('cursor-gallery');
+        follower.classList.add('cursor-gallery');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('cursor-gallery');
+        follower.classList.remove('cursor-gallery');
+      });
+    });
+  }
+</script>

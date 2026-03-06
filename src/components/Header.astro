@@ -110,41 +110,60 @@ const navLinks = [
     color: rgb(244 241 236); /* warm ivory */
   }
 
-  /* Scrolled state: light background */
+  /* Scrolled state: dark graphite backdrop (consistent with site theme) */
   #main-header.scrolled {
-    background: rgba(244, 241, 236, 0.95); /* warm ivory with opacity */
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgb(235 232 226); /* warm stone-100 */
+    background: rgba(12, 11, 10, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(196, 168, 130, 0.12);
   }
 
   #main-header.scrolled .header-link {
-    color: rgb(42 39 37); /* warm stone-800 */
+    color: rgb(221 217 209); /* warm stone-200 */
   }
 
   #main-header.scrolled .header-link:hover {
-    color: rgb(90 85 80); /* warm stone-600 */
+    color: rgb(244 241 236);
   }
 
   #main-header.scrolled .header-nav-link {
-    color: rgb(122 117 110); /* warm stone-500 */
+    color: rgb(163 158 150); /* warm stone-400 */
   }
 
   #main-header.scrolled .header-nav-link:hover {
-    color: rgb(30 28 27); /* warm stone-900 */
+    color: rgb(244 241 236);
   }
 
-  /* Mobile menu adapts when scrolled */
+  /* Mobile menu stays dark */
   #main-header.scrolled .mobile-menu-nav {
-    background: rgba(244, 241, 236, 0.98);
-    border-color: rgb(221 217 209);
+    background: rgba(12, 11, 10, 0.96);
+    border-color: rgba(196, 168, 130, 0.15);
   }
 
-  #main-header.scrolled .mobile-menu-nav a {
-    color: rgb(90 85 80);
+  /* Animated underline on nav links */
+  .header-nav-link {
+    position: relative;
   }
 
-  #main-header.scrolled .mobile-menu-nav a:hover {
-    color: rgb(30 28 27);
+  .header-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #C4A882;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  .header-nav-link:hover::after,
+  .header-nav-link[data-active]::after {
+    transform: scaleX(1);
+  }
+
+  .header-nav-link[data-active] {
+    color: rgb(196, 168, 130) !important;
   }
 </style>
 
@@ -184,6 +203,27 @@ const navLinks = [
       mobileMenu?.classList.add("hidden");
     });
   });
+
+  // Active section tracking
+  const navLinks = document.querySelectorAll('.header-nav-link');
+  const sections = document.querySelectorAll('section[id]');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        navLinks.forEach((link) => {
+          const href = (link as HTMLAnchorElement).getAttribute('href');
+          if (href === `#${entry.target.id}`) {
+            link.setAttribute('data-active', 'true');
+          } else {
+            link.removeAttribute('data-active');
+          }
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach((section) => sectionObserver.observe(section));
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {

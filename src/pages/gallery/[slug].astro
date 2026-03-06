@@ -32,34 +32,38 @@ const nextArtwork = currentIndex < artworks.length - 1 ? artworks[currentIndex +
 <BaseLayout title={`${artwork.title} – Lokesh Kenche`}>
   
   <!-- Simple header for detail pages -->
-  <header class="fixed top-0 left-0 right-0 z-40 bg-stone-50/90 backdrop-blur-sm border-b border-stone-100">
+  <header class="fixed top-0 left-0 right-0 z-40 border-b" style="background: rgba(14,13,12,0.92); backdrop-filter: blur(12px); border-color: rgba(196,168,130,0.1);">
     <div class="content-width section-padding-x py-4 flex justify-between items-center">
-      <a 
-        href="/" 
-        class="text-lg font-serif font-light text-stone-800 tracking-wide hover:text-stone-600 transition-colors"
+      <a
+        href="/"
+        class="text-lg font-serif font-light tracking-wide transition-colors" style="color: rgb(221 217 209);"
+        onmouseover="this.style.color='rgb(244 241 236)'" onmouseout="this.style.color='rgb(221 217 209)'"
       >
         Lokesh Kenche
       </a>
-      <a 
-        href="/#gallery" 
-        class="text-xs uppercase tracking-widest text-stone-500 hover:text-stone-900 transition-colors"
+      <a
+        href="/#gallery"
+        class="text-xs uppercase tracking-widest transition-colors" style="color: rgb(122 117 110);"
+        onmouseover="this.style.color='rgb(221 217 209)'" onmouseout="this.style.color='rgb(122 117 110)'"
       >
-        Back to Gallery
+        ← Gallery
       </a>
     </div>
   </header>
   
   <div class="h-16" aria-hidden="true"></div>
   
-  <article class="min-h-screen section-padding bg-stone-100">
+  <article id="artwork-article" class="min-h-screen section-padding" style="background-color: #0E0D0C; opacity: 0; transform: translateY(20px);">
     <div class="content-width">
 
       <!-- Back navigation -->
       <a
         href="/#gallery"
-        class="inline-flex items-center gap-2 text-sm text-stone-500 hover:text-stone-900 mb-10 transition-colors duration-300"
+        class="inline-flex items-center gap-2 text-sm mb-10 transition-colors duration-300"
+        style="color: rgb(122 117 110);"
+        onmouseover="this.style.color='rgb(196,168,130)'" onmouseout="this.style.color='rgb(122 117 110)'"
       >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4" style="color: #C4A882;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/>
         </svg>
         Back to Gallery
@@ -70,12 +74,12 @@ const nextArtwork = currentIndex < artworks.length - 1 ? artworks[currentIndex +
 
         <!-- Artwork image — mat-framed like a museum piece -->
         <ScrollRevealText>
-          <div class="bg-stone-200 p-5 md:p-8">
-            <div class="aspect-square bg-stone-50 overflow-hidden">
+          <div class="p-5 md:p-8 border" style="background-color: #1A1715; border-color: #2A2520;">
+            <div class="aspect-square overflow-hidden" style="background-color: #0C0B0A;">
               <img
                 src={artwork.image}
                 alt={artwork.title}
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.02]"
               />
             </div>
           </div>
@@ -85,49 +89,53 @@ const nextArtwork = currentIndex < artworks.length - 1 ? artworks[currentIndex +
         <div class="space-y-6 md:sticky md:top-32">
           <ScrollRevealText delay={0.1}>
             <div>
-              <p class="text-[10px] uppercase tracking-widest text-stone-400 font-sans mb-3">
+              <p class="text-[10px] uppercase tracking-widest font-sans mb-3" style="color: #C4A882;">
                 No. {String(artwork.id).padStart(2, '0')}
               </p>
-              <h1 class="text-3xl md:text-4xl font-light font-serif text-stone-800 mb-2">
+              <h1 class="text-3xl md:text-4xl font-light font-serif mb-2" style="color: rgb(244 241 236);">
                 {artwork.title}
               </h1>
-              <p class="text-stone-500 text-sm">{artwork.year}</p>
+              <p class="text-sm" style="color: rgb(122 117 110);">{artwork.year}</p>
             </div>
           </ScrollRevealText>
-          
+
           <ScrollRevealText delay={0.2}>
-            <div class="h-px bg-stone-200 w-16" aria-hidden="true" />
+            <div class="h-px w-16" style="background-color: #C4A882; opacity: 0.4;" aria-hidden="true" />
           </ScrollRevealText>
-          
+
           <ScrollRevealText delay={0.3}>
-            <p class="text-lg leading-relaxed text-stone-700">
+            <p class="text-lg leading-relaxed" style="color: rgb(200 196 190);">
               {artwork.description}
             </p>
           </ScrollRevealText>
-          
+
           <ScrollRevealText delay={0.4}>
             <div class="pt-6 space-y-3">
-              <p class="text-xs text-stone-500 uppercase tracking-widest">Medium</p>
-              <p class="text-base text-stone-700">{artwork.medium}</p>
+              <p class="text-xs uppercase tracking-widest" style="color: #C4A882;">Medium</p>
+              <p class="text-base" style="color: rgb(163 158 150);">{artwork.medium}</p>
             </div>
           </ScrollRevealText>
-          
+
           <!-- Prev/Next navigation -->
           <ScrollRevealText delay={0.5}>
-            <div class="pt-8 flex justify-between items-center border-t border-stone-200 mt-8">
+            <div class="pt-8 flex justify-between items-center border-t mt-8" style="border-color: #2A2520;">
               {prevArtwork ? (
-                <a 
+                <a
                   href={`/gallery/${prevArtwork.slug}`}
-                  class="text-sm text-stone-500 hover:text-stone-900 transition-colors"
+                  class="text-sm transition-colors duration-300"
+                  style="color: rgb(122 117 110);"
+                  onmouseover="this.style.color='rgb(221 217 209)'" onmouseout="this.style.color='rgb(122 117 110)'"
                 >
                   ← {prevArtwork.title}
                 </a>
               ) : <span />}
-              
+
               {nextArtwork ? (
-                <a 
+                <a
                   href={`/gallery/${nextArtwork.slug}`}
-                  class="text-sm text-stone-500 hover:text-stone-900 transition-colors"
+                  class="text-sm transition-colors duration-300"
+                  style="color: rgb(122 117 110);"
+                  onmouseover="this.style.color='rgb(221 217 209)'" onmouseout="this.style.color='rgb(122 117 110)'"
                 >
                   {nextArtwork.title} →
                 </a>
@@ -135,8 +143,23 @@ const nextArtwork = currentIndex < artworks.length - 1 ? artworks[currentIndex +
             </div>
           </ScrollRevealText>
         </div>
-        
+
       </div>
     </div>
   </article>
+
+  <script>
+    import gsap from "gsap";
+    // Page-load entrance animation
+    const article = document.getElementById("artwork-article");
+    if (article) {
+      gsap.to(article, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        delay: 0.1,
+      });
+    }
+  </script>
 </BaseLayout>

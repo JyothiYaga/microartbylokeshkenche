@@ -8,17 +8,20 @@
 ---
 
 <div id="loading-screen" class="loading-overlay" aria-hidden="true">
-  <span id="typewriter-text" class="typewriter-word" aria-label="Microart"
-    ><span class="typewriter-letter">M</span><span class="typewriter-letter"
-      >i</span
-    ><span class="typewriter-letter">c</span><span class="typewriter-letter"
-      >r</span
-    ><span class="typewriter-letter">o</span><span class="typewriter-letter"
-      >a</span
-    ><span class="typewriter-letter">r</span><span class="typewriter-letter"
-      >t</span
-    ></span
-  >
+  <div class="loading-content">
+    <span id="typewriter-text" class="typewriter-word" aria-label="Microart"
+      ><span class="typewriter-letter">M</span><span class="typewriter-letter"
+        >i</span
+      ><span class="typewriter-letter">c</span><span class="typewriter-letter"
+        >r</span
+      ><span class="typewriter-letter">o</span><span class="typewriter-letter"
+        >a</span
+      ><span class="typewriter-letter">r</span><span class="typewriter-letter"
+        >t</span
+      ></span
+    >
+    <div id="loading-gold-line" class="loading-gold-line" aria-hidden="true"></div>
+  </div>
 </div>
 
 <style>
@@ -26,19 +29,26 @@
     position: fixed;
     inset: 0;
     z-index: 50;
-    background-color: #1e1c1b; /* warm charcoal */
+    background-color: #0C0B0A; /* pure graphite */
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
   }
 
+  .loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
   .typewriter-word {
     font-family: "Cormorant Garamond", Georgia, serif;
     font-weight: 300;
     font-size: clamp(3rem, 8vw, 7rem);
-    letter-spacing: 0.05em;
-    color: #d0cbc2; /* warm stone-300 */
+    letter-spacing: 0.08em;
+    color: #EDE8DF;
     line-height: 1;
     display: inline-flex;
     -webkit-font-smoothing: antialiased;
@@ -48,8 +58,17 @@
   .typewriter-letter {
     display: inline-block;
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
     will-change: opacity, transform;
+  }
+
+  .loading-gold-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #C4A882, transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    will-change: transform;
   }
 </style>
 
@@ -59,29 +78,40 @@
   const loadingScreen = document.getElementById("loading-screen");
   const letters = document.querySelectorAll(".typewriter-letter");
 
+  const goldLine = document.getElementById("loading-gold-line");
+
   if (loadingScreen && letters.length > 0) {
     const tl = gsap.timeline();
 
     // Initial pause — let the screen breathe
-    tl.to({}, { duration: 0.5 });
+    tl.to({}, { duration: 0.4 });
 
     // Reveal letters one by one — slow, deliberate cadence
     tl.to(letters, {
       opacity: 1,
       y: 0,
-      duration: 0.3,
-      stagger: 0.22,
+      duration: 0.28,
+      stagger: 0.2,
       ease: "power2.out",
     });
 
-    // Hold the completed word — let it settle
-    tl.to({}, { duration: 1.1 });
+    // Gold accent line draws in beneath the word
+    if (goldLine) {
+      tl.to(goldLine, {
+        scaleX: 1,
+        duration: 0.6,
+        ease: "power2.inOut",
+      }, "-=0.1");
+    }
 
-    // Fade out the entire loading overlay
+    // Hold the completed word — let it settle
+    tl.to({}, { duration: 0.9 });
+
+    // Curtain lifts upward — clip-path reveal
     tl.to(loadingScreen, {
-      opacity: 0,
-      duration: 0.7,
-      ease: "power2.inOut",
+      clipPath: "inset(0 0 100% 0)",
+      duration: 0.75,
+      ease: "power3.inOut",
       onComplete: () => {
         loadingScreen.style.visibility = "hidden";
         loadingScreen.style.pointerEvents = "none";
