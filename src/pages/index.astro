@@ -226,33 +226,16 @@ import artworks from "../data/artworks.json";
        SECTION 2: GALLERY
        ======================================== -->
   <section id="gallery" class="section-boundary section-padding bg-stone-800">
-    <div class="content-width">
-      <header class="text-center mb-12 md:mb-16">
-        <ScrollRevealText>
-          <h2
-            class="text-3xl md:text-4xl font-light font-serif text-stone-100 mb-3"
-          >
-            Gallery
-          </h2>
-        </ScrollRevealText>
-        <ScrollRevealText delay={0.1}>
-          <p class="text-stone-300 max-w-xl mx-auto text-base leading-relaxed">
-            Each piece carved from a single pencil tip.<br />
-            Hover to explore. Click to discover.
-          </p>
-        </ScrollRevealText>
-      </header>
-      <div
-        class="gallery-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5"
-      >
-        {
-          artworks.map((artwork, index) => (
-            <ScrollRevealText delay={0.05 + index * 0.03}>
-              <GalleryCard artwork={artwork} />
-            </ScrollRevealText>
-          ))
-        }
-      </div>
+    <div
+      class="gallery-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3"
+    >
+      {
+        artworks.map((artwork, index) => (
+          <ScrollRevealText delay={0.05 + index * 0.03}>
+            <GalleryCard artwork={artwork} index={index} />
+          </ScrollRevealText>
+        ))
+      }
     </div>
   </section>
 

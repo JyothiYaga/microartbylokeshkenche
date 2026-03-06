@@ -15,14 +15,16 @@ interface Props {
     image: string;
     year: string;
   };
+  index?: number;
 }
 
-const { artwork } = Astro.props;
+const { artwork, index = 0 } = Astro.props;
+const exhibitionNumber = String(index + 1).padStart(2, '0');
 ---
 
-<a 
+<a
   href={`/gallery/${artwork.slug}`}
-  class="gallery-card group relative block aspect-square overflow-hidden bg-stone-100"
+  class="gallery-card group relative block aspect-square overflow-hidden bg-stone-100 cursor-crosshair"
 >
   <!-- Artwork image -->
   <img 
@@ -48,10 +50,11 @@ const { artwork } = Astro.props;
   
   <!-- Title reveal on hover -->
   <div class="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
-    <h3 class="text-white text-base font-light tracking-wide drop-shadow-lg">
+    <p class="text-white/50 text-[10px] uppercase tracking-widest font-sans mb-1">No. {exhibitionNumber}</p>
+    <h3 class="text-white text-base font-light font-serif tracking-wide drop-shadow-lg">
       {artwork.title}
     </h3>
-    <p class="text-white/70 text-xs mt-1 tracking-wider">{artwork.year}</p>
+    <p class="text-white/60 text-xs mt-1 tracking-widest">{artwork.year}</p>
   </div>
 </a>
 
@@ -66,6 +69,6 @@ const { artwork } = Astro.props;
    * No JavaScript needed!
    */
   .gallery-grid:has(.gallery-card:hover) .gallery-card:not(:hover) {
-    filter: blur(2px) brightness(0.75);
+    filter: blur(3px) brightness(0.65);
   }
 </style>

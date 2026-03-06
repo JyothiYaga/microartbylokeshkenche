@@ -250,3 +250,9 @@ img {
 .font-sans {
   font-family: var(--font-sans);
 }
+
+/* Gallery cursor — museum crosshair feel */
+.gallery-grid a {
+  cursor: crosshair;
+}
+
